@@ -3,138 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yadav College Chatbot Interface</title>
+    <title>Yadhava College Chatbot</title>
     <style>
-        /* General Styling and Background */
+        /* CSS STYLES */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5; /* Light background for the preview */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
         }
 
-        /* Chatbot Container */
         .chatbot-container {
             width: 380px;
             height: 550px;
-            background-color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #ddd;
+            background-color: #fff;
         }
 
-        /* Header (College Branding) */
-        .chatbot-header {
-            /* Using a common college/education color: Green */
-            background-color: #4CAF50;
+        .chat-header {
+            background-color: #0056b3; /* A strong blue color */
             color: white;
             padding: 15px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .chatbot-title {
-            margin: 0;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-
-        /* Chat Body (Message History) */
-        .chatbot-body {
+        .chat-messages {
             flex-grow: 1;
-            padding: 15px;
+            padding: 20px 15px;
             overflow-y: auto;
-            background-color: #f7f9fb;
-            /* Scrollbar styling for better look */
-            scrollbar-width: thin;
-            scrollbar-color: #ccc transparent;
-        }
-        .chatbot-body::-webkit-scrollbar {
-            width: 8px;
-        }
-        .chatbot-body::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 10px;
-        }
-
-        /* Messages */
-        .message {
-            margin-bottom: 15px;
-            max-width: 85%;
-            padding: 10px 12px;
-            border-radius: 18px;
-            line-height: 1.4;
-            font-size: 0.9em;
-            word-wrap: break-word;
-            clear: both; /* Important for alignment */
-        }
-
-        .message p {
-            margin: 0;
+            background-color: #e5ddd5; /* Light chat background */
         }
 
         /* Bot Message Style */
         .bot-message {
-            background-color: #e5e5ea; /* Light gray */
+            background-color: #ffffff; /* White bubble */
             color: #333;
-            float: left;
-            border-top-left-radius: 5px; /* Subtle variation */
-            margin-right: auto;
+            padding: 10px 12px;
+            border-radius: 18px 18px 18px 4px;
+            margin-bottom: 10px;
+            max-width: 85%;
+            align-self: flex-start;
+            line-height: 1.4;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
         }
 
         /* User Message Style */
         .user-message {
-            background-color: #4CAF50; /* Primary/College color */
-            color: white;
-            float: right;
-            border-top-right-radius: 5px; /* Subtle variation */
+            background-color: #dcf8c6; /* Light green bubble */
+            color: #333;
+            padding: 10px 12px;
+            border-radius: 18px 18px 4px 18px;
+            margin-bottom: 10px;
+            max-width: 85%;
             margin-left: auto;
+            text-align: left;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
         }
 
-        /* Input Area */
-        .chatbot-input {
+        .chat-input-area {
             display: flex;
-            padding: 10px;
             border-top: 1px solid #ddd;
-            background-color: #fff;
+            padding: 10px;
+            background-color: #f0f0f0;
         }
 
         #user-input {
             flex-grow: 1;
             padding: 10px 15px;
             border: 1px solid #ccc;
-            border-radius: 20px;
-            margin-right: 8px;
-            font-size: 0.9em;
+            border-radius: 25px;
+            margin-right: 10px;
             outline: none;
+            font-size: 16px;
             transition: border-color 0.3s;
         }
+
         #user-input:focus {
-            border-color: #4CAF50;
+            border-color: #0056b3;
         }
 
         #send-button {
-            background-color: #4CAF50;
-            color: white;
+            padding: 10px 18px;
             border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 0.9em;
             font-weight: bold;
             transition: background-color 0.3s, transform 0.1s;
         }
 
         #send-button:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
         }
+
         #send-button:active {
             transform: scale(0.98);
         }
@@ -142,41 +115,70 @@
 </head>
 <body>
 
-    <div class="chatbot-container">
-        <div class="chatbot-header">
-            <h3 class="chatbot-title">Yadav College Chatbot 🎓</h3>
-        </div>
-        <div class="chatbot-body" id="chat-history">
-            <div class="message bot-message">
-                <p>Hello! I'm your virtual assistant for Yadhava College. I have information on **History**, **Admission Process**, **Fee Structure**, and **Courses**.</p>
-            </div>
-            
-            <div class="message user-message">
-                <p>Tell me about the admission process.</p>
-            </div>
-
-            <div class="message bot-message">
-                <p>The **Admission Process** is based on academic merit and follows the guidelines of Madurai Kamaraj University. Please refer to the official college notice for the latest dates and eligibility criteria, which are usually published in May/June.</p>
-            </div>
-            
-            <div class="message user-message">
-                <p>What are the available undergraduate courses?</p>
-            </div>
-            
-            <div class="message bot-message">
-                <p>We offer various UG programs including B.A. History, B.Sc. Physics, B.Com., and more. For the full list and course outcomes, please check the 'Courses Outcome' section on the college website.</p>
-            </div>
-            
-            <div class="message bot-message">
-                <p>Is there anything else I can assist you with, such as **Fee Structure** or **Scholarship** details?</p>
-            </div>
-
-        </div>
-        <div class="chatbot-input">
-            <input type="text" id="user-input" placeholder="Type your message here..." />
-            <button id="send-button">Send</button>
+<div class="chatbot-container">
+    <div class="chat-header">
+        Yadhava College Bot
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="bot-message">
+            **How can I help you?** I can provide information on Yadhava College courses, admissions, history, and more.
         </div>
     </div>
+    <div class="chat-input-area">
+        <input type="text" id="user-input" placeholder="Search for course details...">
+        <button id="send-button" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    /* JAVASCRIPT FOR API CONNECTION */
+    const SERVER_URL = 'http://127.0.0.1:5000/api/chat'; 
+
+    function appendMessage(sender, text) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const inputField = document.getElementById('user-input');
+        const message = inputField.value.trim();
+        
+        if (message === "") return;
+
+        // 1. Display user message immediately
+        appendMessage('user', message);
+        inputField.value = '';
+        
+        // 2. Fetch the actual response from the backend
+        try {
+            const response = await fetch(SERVER_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: message })
+            });
+            
+            const data = await response.json();
+            
+            // 3. Display the bot's answer
+            appendMessage('bot', data.answer);
+
+        } catch (error) {
+            console.error('Error connecting to the backend server:', error);
+            appendMessage('bot', '❌ Connection error. Please ensure the Python server is running on port 5000.');
+        }
+    }
+    
+    // Allow sending message with the Enter key
+    document.getElementById('user-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
 
 </body>
 </html>
